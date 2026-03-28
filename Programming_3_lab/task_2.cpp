@@ -20,8 +20,8 @@ int main() {
         int j = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 99 && i == 0; j++) {
-                map[i][j] = (j + 1) * dis(gen);
-                map[i+1][j] = j + 1;
+                map[i][j] = 2 * (j + 1) * dis(gen);
+                map[i+1][j] = (j + 1) * dis(gen);
                 outFile << map[i][j] << " " ;
                 outFile << map[i+1][j] << "\n";
             }
