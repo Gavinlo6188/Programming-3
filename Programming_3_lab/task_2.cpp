@@ -25,6 +25,9 @@ int main() {
     float k = 2.0;
     float m = 0.0;
 
+
+
+  // generating data with noise (for single-variable linear regression, and for two-variable linear regression)  
     if (outFile.is_open()) {
         outFile << "Random numbers between n(-6.7 and 6.7):\n";
         //int x = 0;
@@ -40,6 +43,8 @@ int main() {
                 map[x+1][y] = y_noise;  // Store the noisy linear function in the dataset "since the goal is to train  a model to handle noise"
                 x_last = x_now;
                 y_last = y_clean;
+                map[0][x] = x_now;
+                map[1][x] = y_noise;
                 outFile << map[0][x] << " " ;  // Store x values in a row alone
                 outFile << map[1][x] << "\n";  // Store y values in a row alone
         }
@@ -48,4 +53,33 @@ int main() {
 
     cout<<"hello"<<endl;
     outFile.close();
+
+
+
+
+
+    
+
+
+
+    // for implementating the normal equation
+
+
+
+
+
+
+    
+
+    //For implementing the gradient descent method for simple linear regression problem (single variable linear regression).
+
+
+
+
+
+
+
+    
+//for extending the gradent descent method to multiple linear regression problem.
+    
 }
