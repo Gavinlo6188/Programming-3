@@ -1,8 +1,14 @@
 Random numbers between n(0.95 and 1.05):
-1.03036 103.948
-1.91323 104.308
-2.97123 98.6632
-3.88811 107.164
-Normal Equation Gradient: 34.9728
-Normal Equation Intercept: 0.712484
-Normal Equation Line: House Price = 34.9728 * Size + 0.712484
+0.990637 9.849
+1.99626 20.0057
+2.99629 29.9258
+4.03592 40.0378
+5.01207 50.4355
+5.99987 59.5442
+6.9646 70.3272
+8.03478 80.4547
+9.00275 90.4224
+10.0268 99.956
+Normal Equation Gradient: 10.9317
+Normal Equation Intercept: -0.509415
+Normal Equation Line: House Price = 10.9317 * Size + -0.509415

@@ -72,7 +72,7 @@ int main() {
         i_average = i_sum / number_of_data;
         j_average = j_sum / number_of_data;
         i_average_squared = i_average * i_average;
-        normal_equation_gradient = (i_now_x_j_now_sum + i_average * j_average - i_average * j_sum - j_average * i_sum) / (i_squared_sum - 2 * i_sum * i_average + i_average_squared);
+        normal_equation_gradient = (i_now_x_j_now_sum + i_average * j_average * number_of_data - i_average * j_sum - j_average * i_sum) / (i_squared_sum - 2 * i_sum * i_average + i_average_squared);
         normal_equation_intercept = j_average - normal_equation_gradient * i_average;
         outFile << "Normal Equation Gradient: " << normal_equation_gradient << "\n";
         outFile << "Normal Equation Intercept: " << normal_equation_intercept << "\n";
