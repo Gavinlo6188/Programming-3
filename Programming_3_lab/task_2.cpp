@@ -11,7 +11,7 @@ int main() {
     
     using namespace std;
     uniform_real_distribution<> dis(-6.7, 6.7);
-    vector<vector<float>> map(99, vector<float>(99, 1));
+    vector<vector<float>> map(2, vector<float>(99, 1));
     
     float x_last = 0.0;
     float y_last = 0.0;
@@ -35,16 +35,21 @@ int main() {
         for (int x = 0; x < 99; x++) {
                 y_clean = k*(x+1) + m;     // Create the linear function "where x is a feature AND  y is the noisy output"
                 y_noise = y_clean + dis(gen) // Add the additive noise to the linear function
-                x_now = (y + 1) + dis(gen);   // Add not multiply
+                x_now = (x + 1) + dis(gen);   // Add not multiply
                 x_change_sum += x_now - x_last;
                 y_change_sum += y_clean - y_last;
 
-                map[x][y] = x_now;
-                map[x+1][y] = y_noise;  // Store the noisy linear function in the dataset "since the goal is to train  a model to handle noise"
                 x_last = x_now;
-                y_last = y_clean;
+                y_last = y_noise;
+
+                x_sum += x_now + x_last;
+                y_sum = y_noise + y_last;
+            x_squared = x_sum  * x_sum;
+            x_sum_squared += x_squared;
+            y_sum_squared += x_sum * y_sum;
+                    
                 map[0][x] = x_now;
-                map[1][x] = y_noise;
+                map[1][x] = y_noise;     // Store the noisy linear function in the dataset "since the goal is to train  a model to handle noise"
                 outFile << map[0][x] << " " ;  // Store x values in a row alone
                 outFile << map[1][x] << "\n";  // Store y values in a row alone
         }
