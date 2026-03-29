@@ -7,41 +7,41 @@ int main() {
     std::random_device rd;
     std::mt19937 gen(rd());
     
-    std::ofstream outFile("output.txt");
+    std::ofstream outFile("Output_For_TASK_2.txt");
     
     using namespace std;
-    uniform_real_distribution<> dis(0.95, 1.05);
-    vector<vector<float>> map(3, vector<float>(99, 1));
+    uniform_real_distribution<> dis(-6.7, 6.7);
+    vector<vector<float>> map(99, vector<float>(99, 1));
     
-    float i_last = 0.0;
-    float j_last = 0.0;
-    float i_now = 0.0;
-    float j_now = 0.0;
-    float i_change_sum = 0.0;
-    float j_change_sum = 0.0;
+    float x_last = 0.0;
+    float y_last = 0.0;
+    float x_now = 0.0;
+    float y_clean = 0.0;
+    float y_noise = 0.0;
+    float x_change_sum = 0.0;
+    float y_change_sum = 0.0;
 
-    // y = mx + c
-    float m = 2.0;
-    float c = 0.0;
+    // y = kx + m
+    float k = 2.0;
+    float m = 0.0;
 
     if (outFile.is_open()) {
-        outFile << "Random numbers between n(0.95 and 1.05):\n";
-        int i = 0;
-        int j = 0;
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 99 && i == 0; j++) {
-                j_now = m * (j + 1) * dis(gen) + c;
-                i_now = (j + 1) * dis(gen);
-                i_change_sum += i_now - i_last;
-                j_change_sum += j_now - j_last;
+        outFile << "Random numbers between n(-6.7 and 6.7):\n";
+        //int x = 0;
+        //int y = 0;
+        for (int x = 0; x < 99; x++) {
+                y_clean = k*(x+1) + m;     // Create the linear function "where x is a feature AND  y is the noisy output"
+                y_noise = y_clean + dis(gen) // Add the additive noise to the linear function
+                x_now = (y + 1) + dis(gen);   // Add not multiply
+                x_change_sum += x_now - x_last;
+                y_change_sum += y_clean - y_last;
 
-                map[i][j] = i_now;
-                map[i+1][j] = j_now;
-                i_last = i_now;
-                j_last = j_now;
-                outFile << map[i][j] << " " ;
-                outFile << map[i+1][j] << "\n";
-            }
+                map[x][y] = x_now;
+                map[x+1][y] = y_noise;  // Store the noisy linear function in the dataset "since the goal is to train  a model to handle noise"
+                x_last = x_now;
+                y_last = y_clean;
+                outFile << map[0][x] << " " ;  // Store x values in a row alone
+                outFile << map[1][x] << "\n";  // Store y values in a row alone
         }
     }
     
