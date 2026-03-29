@@ -3,83 +3,74 @@
 #include "vector"
 #include "fstream"
 
+//Input from user
+float error_bound = 0.05;
+int number_of_data = 100;
+int number_of_data_into_vector = 0;
+// y = mx + c
+float gradient = 2.0;
+float intercept = 0.0;
+
+//Calculation variables
+float i_now = 0.0;
+float j_now = 0.0;
+float i_sum = 0.0;
+float j_sum = 0.0;
+float i_now_x_j_now_sum = 0.0;
+float i_average = 0.0;
+float j_average = 0.0;
+float normal_equation_gradient = 0.0;
+float normal_equation_intercept = 0.0;
+float i_squared_sum = 0.0;
+float i_average_squared = 0.0;
+
+
 int main() {
     std::random_device rd;
     std::mt19937 gen(rd());
     
-    std::ofstream outFile("Output_For_TASK_2.txt");
+    std::ofstream outFile("output.txt");
     
     using namespace std;
-    uniform_real_distribution<> dis(-6.7, 6.7);
-    vector<vector<float>> map(99, vector<float>(99, 1));
-    
-    float x_last = 0.0;
-    float y_last = 0.0;
-    float x_now = 0.0;
-    float y_clean = 0.0;
-    float y_noise = 0.0;
-    float x_change_sum = 0.0;
-    float y_change_sum = 0.0;
-
-    // y = kx + m
-    float k = 2.0;
-    float m = 0.0;
+    uniform_real_distribution<> dis(1 - error_bound, 1.0 + error_bound);
 
 
-
-  // generating data with noise (for single-variable linear regression, and for two-variable linear regression)  
     if (outFile.is_open()) {
-        outFile << "Random numbers between n(-6.7 and 6.7):\n";
-        //int x = 0;
-        //int y = 0;
-        for (int x = 0; x < 99; x++) {
-                y_clean = k*(x+1) + m;     // Create the linear function "where x is a feature AND  y is the noisy output"
-                y_noise = y_clean + dis(gen) // Add the additive noise to the linear function
-                x_now = (y + 1) + dis(gen);   // Add not multiply
-                x_change_sum += x_now - x_last;
-                y_change_sum += y_clean - y_last;
+        outFile << "Random numbers between n(0.95 and 1.05):\n";
+        int i = 0;
+        int j = 0;
+        number_of_data_into_vector = number_of_data - 1;
+        cout<<"number_of_data_into_vector: "<<number_of_data_into_vector<<endl;
+        cout<<"gradient: "<< gradient <<endl;
+        cout<<"intercept: "<< intercept <<endl;
+        cout<<"Error Bound for house price: "<< error_bound <<endl;
+        vector<vector<float>> map(3, vector<float>(number_of_data, 1));
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < number_of_data_into_vector && i == 0; j++) {
+                //generate data //i_now = x, j_now = y
+                i_now = (j + 1) * dis(gen);
+                j_now = (gradient * (i_now) + intercept) * dis(gen);
+                
+                //normal calculation
+                i_sum += i_now;
+                j_sum += j_now;
+                i_now_x_j_now_sum += i_now * j_now;
+                i_squared_sum += i_now * i_now;
 
-                map[x][y] = x_now;
-                map[x+1][y] = y_noise;  // Store the noisy linear function in the dataset "since the goal is to train  a model to handle noise"
-                x_last = x_now;
-                y_last = y_clean;
-                map[0][x] = x_now;
-                map[1][x] = y_noise;
-                outFile << map[0][x] << " " ;  // Store x values in a row alone
-                outFile << map[1][x] << "\n";  // Store y values in a row alone
+                map[i][j] = i_now;
+                map[i+1][j] = j_now;
+
+                outFile << map[i][j] << " " ;
+                outFile << map[i+1][j] << "\n";
+            }
         }
+        i_average = i_sum / number_of_data;
+        j_average = j_sum / number_of_data;
+        i_average_squared = i_average * i_average;
+        normal_equation_gradient = (i_now_x_j_now_sum + i_average * j_average - i_average * j_sum - j_average * i_sum) / (i_squared_sum - 2 * i_sum * i_average + i_average_squared);
+        normal_equation_intercept = j_average - normal_equation_gradient * i_average;
+        outFile << "Normal Equation Gradient: " << normal_equation_gradient << "\n";
+        outFile << "Normal Equation Intercept: " << normal_equation_intercept << "\n";
+        outFile.close();
     }
-    
-
-    cout<<"hello"<<endl;
-    outFile.close();
-
-
-
-
-
-    
-
-
-
-    // for implementating the normal equation
-
-
-
-
-
-
-    
-
-    //For implementing the gradient descent method for simple linear regression problem (single variable linear regression).
-
-
-
-
-
-
-
-    
-//for extending the gradent descent method to multiple linear regression problem.
-    
 }
