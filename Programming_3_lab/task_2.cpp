@@ -32,18 +32,23 @@ int main() {
     std::ofstream outFile("output.txt");
     
     using namespace std;
-    uniform_real_distribution<> dis(1 - error_bound, 1.0 + error_bound);
 
 
     if (outFile.is_open()) {
-        outFile << "Random numbers between n(0.95 and 1.05):\n";
+        outFile << "Random numbers between n(" << 1 - error_bound << " and " << 1.0 + error_bound << "):\n";
         int i = 0;
         int j = 0;
         number_of_data_into_vector = number_of_data - 1;
-        cout<<"number_of_data_into_vector: "<<number_of_data_into_vector<<endl;
-        cout<<"gradient: "<< gradient <<endl;
-        cout<<"intercept: "<< intercept <<endl;
-        cout<<"Error Bound for house price: "<< error_bound <<endl;
+        cout<<"number_of_data_into_vector: ";
+        cin >> number_of_data_into_vector;
+        cout<<"gradient: ";
+        cin >> gradient;
+        cout<<"intercept: ";
+        cin >> intercept;
+        cout<<"Error Bound for house price: ";
+        cin >> error_bound;
+
+        uniform_real_distribution<> dis(1 - error_bound, 1.0 + error_bound);
         vector<vector<float>> map(3, vector<float>(number_of_data, 1));
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < number_of_data_into_vector && i == 0; j++) {
@@ -71,6 +76,7 @@ int main() {
         normal_equation_intercept = j_average - normal_equation_gradient * i_average;
         outFile << "Normal Equation Gradient: " << normal_equation_gradient << "\n";
         outFile << "Normal Equation Intercept: " << normal_equation_intercept << "\n";
+        outFile << "Normal Equation Line: House Price = " << normal_equation_gradient << " * Size + " << normal_equation_intercept << "\n";
         outFile.close();
     }
 }
