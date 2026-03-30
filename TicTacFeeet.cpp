@@ -95,19 +95,21 @@ public:
             int move; 
             cin >> move; move--;  // Decrement move to convert to indexing format
             int row = move / 3; 
-            int col = move % 3;      
+            int col = move % 3;
 
-       
+            // Input validation for move
             if (move < 0 || move > 8 || cin.fail()){
                 cout << "Invalid move broski. Please enter a number between 1 and 9." << endl;
                 cin.clear(); // Clear the error flag and reset cin, wihtout this cin will always fail
                 cin.ignore(420, '\n'); // Ignore the old bad input, or cin will try to read the same input again, we skip 420 charaters and \n tells the compiler to stop skippping once the end of the lines is reached where the user pressed the Enter button
                 Print_Arena();
        }
+            // Position Check if used
             else if (map[row][col] == '.'){
                 map[row][col] = Current_Player;
                 return;
             }
+            // if position is used, redo the move
             else if (map[row][col] != '.'){
                 cout << "This spot is already taken you fool. Try again." << endl;
                 Print_Arena();
@@ -125,6 +127,7 @@ int main(){
         // Get Player move, check if he wins
         Kheim_TicTacToe.Player_Move();
 
+        //Winner Congratulations
         if(Kheim_TicTacToe.Check_Winner()){
         Kheim_TicTacToe.Print_Arena();
         cout << "WINNER WINNER CHICKEN DINNER!!! WOHOOOOO!! YOU ARE HIM, EVEN BETTER THAN KHEIM!" << endl;
@@ -138,6 +141,7 @@ int main(){
         break;
         };
 
+        //Next Round
         Kheim_TicTacToe.Switch_Player();
 
     }
