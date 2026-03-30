@@ -10,7 +10,6 @@ int main() {
     float x1_last = 0.0;
     float x2_last = 0.0;
     float y_last = 0.0;
-
     float x1_now = 0.0;
     float x2_now = 0.0;
     float y_clean = 0.0;
@@ -25,17 +24,13 @@ int main() {
     float x2_sum_squared = 0.0;
     float xy_sum = 0.0;
     float x_squared = 0.0;
+    
     //y = wx + b
-    float w = 2.0;
-    float b = 0.0;
+    float w = 2.0;  // Slope
+    float b = 0.0;  // Y-intercept
     int N_loop = 100; // loop number
-
-
     float w1_True = 2.0; 
-        float w2_True = 3.0; 
-
-
-
+    float w2_True = 3.0; 
     std::random_device rd;
     std::mt19937 gen(rd());    
     std::ofstream outFile("Output_For_TASK_2.txt");
@@ -47,9 +42,9 @@ int main() {
     if (outFile.is_open()) {
         outFile << "Random numbers between n(-6.7 and 6.7):\n";
         for (int x = 0; x < N_loop; x++) {
-                         x1_now = (x + 1) + dis(gen);   // Add not multiply
+                x1_now = (x + 1) + dis(gen);   // Add not multiply
                 x2_now = (x + 1) + dis(gen);   // Add not multiply    
-            y_clean = w1_True*(x1_now) + w2_True*(x2_now) + b;     // Create the linear function "where x is a feature AND  y is the noisy output"
+                y_clean = w1_True*(x1_now) + w2_True*(x2_now) + b;     // Create the linear function "where x is a feature AND  y is the noisy output"
                 y_noise = y_clean + dis(gen); // Add the additive noise to the linear function
 
                 x1_change_sum += x1_now - x1_last;
@@ -172,7 +167,7 @@ int main() {
     float Delta_w1 = 0.0;
     float Delta_w2 = 0.0;
 
-    for (int Iterations = 0; Iterations < 167000; Iterations++) {
+    for (int Iterations = 0; Iterations < 10000; Iterations++) {
         for (int i = 0; i < N_loop; i++) {
             float x1_i = map[0][i]; // i-th x1 value in the dataset
             float x2_i = map[1][i]; // i-th x2 value in the dataset
@@ -211,7 +206,13 @@ int main() {
     cout << "Multiple Linear Regression : Gradient Descent (w1 'slope'): " << w1_new << endl;
     cout << "Multiple Linear Regression : Gradient Descent (w2 'slope'): " << w2_new << endl;
     cout << "Multiple Linear Regression : Gradient Descent (b_initial_Multiple 'intercept'): " << b_new_Multiple << endl;
-    
 
+
+
+
+    
+// Ammar Elrayes - 3025938E
+// Gavin Lo - 2877634L
+// Michael Andrews - 2898063A
 
 }
