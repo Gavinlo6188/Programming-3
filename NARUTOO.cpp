@@ -47,10 +47,11 @@ int main() {
     if (outFile.is_open()) {
         outFile << "Random numbers between n(-6.7 and 6.7):\n";
         for (int x = 0; x < N_loop; x++) {
-                y_clean = w1_True*(x1_now) + w2_True*(x2_now) + b;     // Create the linear function "where x is a feature AND  y is the noisy output"
+                         x1_now = (x + 1) + dis(gen);   // Add not multiply
+                x2_now = (x + 1) + dis(gen);   // Add not multiply    
+            y_clean = w1_True*(x1_now) + w2_True*(x2_now) + b;     // Create the linear function "where x is a feature AND  y is the noisy output"
                 y_noise = y_clean + dis(gen); // Add the additive noise to the linear function
-                x1_now = (x + 1) + dis(gen);   // Add not multiply
-                x2_now = (x + 1) + dis(gen);   // Add not multiply
+
                 x1_change_sum += x1_now - x1_last;
                 x2_change_sum += x2_now - x2_last;
                 y_change_sum += y_clean - y_last;
@@ -114,7 +115,7 @@ int main() {
     for (int Iterations = 0; Iterations < 167000; Iterations++) {
         for (int i = 0; i < N_loop; i++) {
         float x_i = map[0][i]; // the i-th x value in dataset
-        float y_i = map[1][i]; // the i-th y value in dataset
+        float y_i = map[2][i]; // the i-th y value in dataset
             float Error = 0.0; // error for the i-th point of data
     //        b_sum += b_initial;
         //   y_i_sum += y_i;
@@ -167,11 +168,9 @@ int main() {
     float Error_Multiple = 0.0; // error for i-th point/position of data in multiple linear regression
     float Delta_w1_sum = 0.0;
     float Delta_w2_sum = 0.0;
-    float Delta_b_sum = 0.0; 
-    float Error_Multiple = 0.0;
+    float Delta_b_sum_MULTI = 0.0; 
     float Delta_w1 = 0.0;
     float Delta_w2 = 0.0;
-    float Delta_b = 0.0;
 
     for (int Iterations = 0; Iterations < 167000; Iterations++) {
         for (int i = 0; i < N_loop; i++) {
@@ -192,17 +191,17 @@ int main() {
             
             Delta_w1_sum += Delta_w1; //  sum of  derivatives of  cost function with respect to w1 for all i
             Delta_w2_sum += Delta_w2; //  sum of  derivatives of  cost function with respect to w2 for all i
-            Delta_b_sum += Delta_b; //  sum of  derivatives of  cost function with respect to b for all i
+            Delta_b_sum_MULTI += Delta_b; //  sum of  derivatives of  cost function with respect to b for all i
 
         }
 
             w1_new = w1_initial - Learning_rate * (Delta_w1_sum/N_loop); // same rule but for our case
             w2_new = w2_initial - Learning_rate * (Delta_w2_sum/N_loop); // same rule but for our case
-            b_new_Multiple = b_initial_Multiple - Learning_rate * (Delta_b_sum/N_loop); // same rule but for our case
+            b_new_Multiple = b_initial_Multiple - Learning_rate * (Delta_b_sum_MULTI/N_loop); // same rule but for our case
             
             Delta_w1_sum = 0.0; // RESET SUM OF DERIVATIVES FOR NEXT INTERATION
             Delta_w2_sum = 0.0; // RESET SUM OF DERIVATIVES FOR NEXT INTERATION 
-            Delta_b_sum = 0.0; // reset the sum of derivatives of cost function
+            Delta_b_sum_MULTI = 0.0; // reset the sum of derivatives of cost function
             
             w1_initial = w1_new; // update the position for next iteration
             w2_initial = w2_new; // update the position for next iteration
