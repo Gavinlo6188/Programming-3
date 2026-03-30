@@ -47,7 +47,7 @@ int main() {
     if (outFile.is_open()) {
         outFile << "Random numbers between n(-6.7 and 6.7):\n";
         for (int x = 0; x < N_loop; x++) {
-                         x1_now = (x + 1) + dis(gen);   // Add not multiply
+                         x1_now = (x + 1) + dis(gen);   // Add not multiply: so here we addd additive noise to the regression line to simulate real-life data
                 x2_now = (x + 1) + dis(gen);   // Add not multiply    
             y_clean = w1_True*(x1_now) + w2_True*(x2_now) + b;     // Create the linear function "where x is a feature AND  y is the noisy output"
                 y_noise = y_clean + dis(gen); // Add the additive noise to the linear function
@@ -101,7 +101,6 @@ int main() {
     // Note the minus sign is important because we want to move in the opposite direction as in DOWNHILL rather UPHILL with the gradient
     //theta_new = theta_old - Learning_rate * Delta_J; // The Update Rule that repeats until value of Delta_J is close to zero or oes not change much anymore (convergence)
 
-    // sum 
     float w_by_x_i = 0.0; // the sum of w*x_i for all i
     float b_sum = 0.0; // the sum of b*1 for all i
     float y_i_sum = 0.0; // the sum of y_i for all i
@@ -117,7 +116,7 @@ int main() {
         float x_i = map[0][i]; // the i-th x value in dataset
         float y_i = map[2][i]; // the i-th y value in dataset
             float Error = 0.0; // error for the i-th point of data
-    //        b_sum += b_initial;
+    //        b_sum += b_initial;  
         //   y_i_sum += y_i;
         // x_i_sum += x_i;
             w_by_x_i = w_initial * x_i;
@@ -148,6 +147,7 @@ int main() {
     
 
         // See how close they are!
+    cout << "This is Difference between w values to see error "
     cout << "Difference in w: " << abs(w - w_initial) << endl;
     cout << "Difference in b: " << abs(b - b_initial) << endl;
 
