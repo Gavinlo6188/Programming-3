@@ -32,13 +32,15 @@ int main() {
         cout << endl;
         cout << "Enter WASD to move '@' (or - to exit): ";
         cin >> cmd; // Get user input
+        // Exit function
         if(cmd == '-') {
             exit(0);
         }
+        // WASD movement controls
         if ((cmd == 'w' || cmd == 'W') && (i_1 > 1)) {
-            map[i_1][j_1] = '.';
+            map[i_1][j_1] = '.'; // replace the old position with '.'
             i_1--;
-            map[i_1][j_1] = '@';
+            map[i_1][j_1] = '@'; // new position
         } else if ((cmd == 's' || cmd == 'S') && (i_1 < 8)) {
             map[i_1][j_1] = '.';
             i_1++;
@@ -52,7 +54,7 @@ int main() {
             j_1++;
             map[i_1][j_1] = '@';
         }else if ((cmd == 'w' || cmd == 'W' || cmd == 'a' || cmd == 'A' || cmd == 's' || cmd == 'S' || cmd == 'd' || cmd == 'D') && (i_1 <= 1 || i_1 >= 8 || j_1 <= 1 || j_1 >= 8)) {
-            cout << "khiem ur bad" << endl;
+            cout << "khiem ur bad" << endl; // player touches the wall, do not move
         }
 
 
