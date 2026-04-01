@@ -147,7 +147,7 @@ int main() {
     
 
         // See how close they are!
-    cout << "This is Difference between w values to see error "
+    cout << "This is Difference between w values to see error ";
     cout << "Difference in w: " << abs(w - w_initial) << endl;
     cout << "Difference in b: " << abs(b - b_initial) << endl;
 

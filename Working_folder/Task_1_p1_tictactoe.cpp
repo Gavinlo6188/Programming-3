@@ -81,7 +81,7 @@ std::pair<double, double> fit_normal_equation(const std::vector<DataPoint>& data
     }
 
     long double denom = (static_cast<long double>(n) * sum_x2) - (sum_x * sum_x);
-    if (std::fabsl(denom) < 1e-18L) {
+    if (std::fabs(denom) < 1e-18L) {
         throw std::runtime_error("Normal equation failed: denominator ~ 0 (x values may be identical).");
     }
 
